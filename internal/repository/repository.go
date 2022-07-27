@@ -1,7 +1,9 @@
 package repository
 
+import "sheltes-map/internal/domain"
+
 type IShelterRepository interface {
-	Save() (bool, error)
+	Save(shelter *domain.Shelter) (bool, error)
 }
 
 type Repository struct {
