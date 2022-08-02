@@ -1,15 +1,18 @@
 package repository
 
-import "sheltes-map/internal/domain"
+import (
+	"sheltes-map/internal/core"
+	"sheltes-map/pkg/database"
+)
 
 type IShelterRepository interface {
-	Save(shelter *domain.Shelter) (bool, error)
+	GetNearestShelter(latitude, longitude float32) (*core.Shelter, error)
 }
 
 type Repository struct {
 	Shelter IShelterRepository
 }
 
-func NewRepository(db *Database) *Repository {
+func NewRepository(db *database.Database) *Repository {
 	return &Repository{Shelter: NewShelterRepository(db)}
 }

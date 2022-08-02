@@ -8,6 +8,7 @@ import (
 
 type Config struct {
 	Database *DatabaseConfig
+	Server   *ServerConfig
 }
 
 type DatabaseConfig struct {
@@ -19,6 +20,12 @@ type DatabaseConfig struct {
 	MaxConnections string
 	SslMode        string
 	CtxLifeTime    time.Duration
+}
+
+type ServerConfig struct {
+	Network string
+	Port    string
+	Host    string
 }
 
 func NewConfig() (*Config, error) {
@@ -37,6 +44,11 @@ func NewConfig() (*Config, error) {
 			MaxConnections: getEnv("MAX_DB_CONNECTIONS", ""),
 			SslMode:        getEnv("DB_SSL_MODE", ""),
 			CtxLifeTime:    getEnvTimeDuration("DB_CTX_LIFETIME", 5*time.Second),
+		},
+		&ServerConfig{
+			Network: getEnv("SERVER_NETWORK", ""),
+			Host:    getEnv("SERVER_HOST", ""),
+			Port:    getEnv("SERVER_PORT", ""),
 		},
 	}, nil
 }

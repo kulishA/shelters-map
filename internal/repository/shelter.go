@@ -2,29 +2,29 @@ package repository
 
 import (
 	"fmt"
-	"sheltes-map/internal/domain"
+	"sheltes-map/internal/core"
+	"sheltes-map/pkg/database"
 )
 
 type ShelterRepository struct {
-	db *Database
+	db *database.Database
 }
 
-func NewShelterRepository(db *Database) *ShelterRepository {
+func NewShelterRepository(db *database.Database) *ShelterRepository {
 	return &ShelterRepository{db: db}
 }
 
-func (r *ShelterRepository) Save(shelter *domain.Shelter) (bool, error) {
-	var id int
+func (r *ShelterRepository) GetNearestShelter(latitude, longitude float32) (*core.Shelter, error) {
+	var shelter core.Shelter
+	query := fmt.Sprintf("SELECT city, address, address_number, latitude, longitude, closer_type, shelter_type, building_type, owner, phone, ramp "+
+		"FROM %s ORDER BY location <-> point '(%f, %f)' LIMIT 1", shelterTable, latitude, longitude)
 
-	query := fmt.Sprintf("INSERT INTO %s (city, address, address_number, latitude, longitude, closer_type, shelter_type, building_type, owner, phone, ramp) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id", shelterTable)
+	row := r.db.DB.QueryRow(query)
 
-	row := r.db.DB.QueryRow(query, shelter.City, shelter.Address, shelter.AddressNumber,
-		shelter.Latitude, shelter.Longitude, shelter.CloserType, shelter.ShelterType,
-		shelter.BuildingType, shelter.Owner, shelter.Phone, shelter.Ramp)
-
-	if err := row.Scan(&id); err != nil {
-		return false, err
+	if err := row.Scan(&shelter.City, &shelter.Address, &shelter.AddressNumber, &shelter.Latitude, &shelter.Longitude,
+		&shelter.CloserType, &shelter.ShelterType, &shelter.BuildingType, &shelter.Owner, &shelter.Phone, &shelter.Ramp); err != nil {
+		return nil, err
 	}
 
-	return true, nil
+	return &shelter, nil
 }
