@@ -2,6 +2,8 @@ package grpc
 
 import (
 	"fmt"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_logrus "github.com/grpc-ecosystem/go-grpc-middleware/logging/logrus"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"net"
@@ -31,8 +33,15 @@ func NewGrpcServer(service *service.Service) *Server {
 		Logger:  logrus.New(),
 		Handler: handler.NewHandler(service),
 	}
+
+	log := logrus.NewEntry(deps.Logger)
+
 	server := &Server{
-		grpc: grpc.NewServer(),
+		grpc: grpc.NewServer(grpc.UnaryInterceptor(
+			grpc_middleware.ChainUnaryServer(
+				grpc_logrus.UnaryServerInterceptor(log),
+			),
+		)),
 		Deps: deps,
 	}
 
