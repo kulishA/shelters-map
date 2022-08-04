@@ -1,7 +1,5 @@
 name: Build and Deploy
-on:
-  push:
-    branches: [master]
+on: push
 
 jobs:
   deploy:
