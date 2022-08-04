@@ -6,15 +6,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Golang app
-        uses: appleboy/ssh-action@v0.1.2
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{secrets.SSH_HOST}}
-          key: ${{secrets.SSH_KEY}}
-          username: ${{secrets.SSH_USERNAME}}
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
 
-          script:
-            mkdir app &&
-            cd app &&
-            git clone git@github.com:kulishA/shelters-map.git &&
+          script: |
+            mkdir app
+            cd app
+            git clone git@github.com:kulishA/shelters-map.git
             echo "Deployment successful"
 
