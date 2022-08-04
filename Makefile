@@ -7,7 +7,7 @@ migration-up:
 migration-down:
 	@echo "migration-down";
 build-app:
-	@go build -o ${BIN_DIR}/app ./
+	@go build -o ${BIN_DIR}/app ./cmd/api/main.go
 build-api:
 	@protoc -I${PROTO_DIR} --go_out=. --go-grpc_out=. ${PROTO_DIR}/${API_NAME}.proto
 	@echo "build api: DONE"
