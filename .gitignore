@@ -25,5 +25,4 @@ go.work
 /database/data/
 /bin
 .env
-/proto
 
