@@ -14,6 +14,3 @@ RUN go build -o /bin/app ./cmd/api/main.go
 
 CMD ["/bin/app"]
 
-#DATABASE
-FROM postgis/postgis:latest
-

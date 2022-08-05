@@ -20,7 +20,7 @@ func main() {
 
 	db, err := database.NewDatabase(conf.Database)
 	if err != nil {
-		log.Error("error while run database", err)
+		log.Fatalf("error while run database: %s", err.Error())
 	}
 
 	repos := repository.NewRepository(db)
