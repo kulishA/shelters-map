@@ -36,19 +36,19 @@ func NewConfig() (*Config, error) {
 
 	return &Config{
 		&DatabaseConfig{
-			Host:           getEnv("DB_HOST", ""),
-			Port:           getEnv("DB_PORT", ""),
-			Name:           getEnv("DB_NAME", ""),
-			User:           getEnv("DB_USER", ""),
-			Password:       getEnv("DB_PASSWORD", ""),
-			MaxConnections: getEnv("MAX_DB_CONNECTIONS", ""),
-			SslMode:        getEnv("DB_SSL_MODE", ""),
-			CtxLifeTime:    getEnvTimeDuration("DB_CTX_LIFETIME", 5*time.Second),
+			Host:           getEnv("POSTGRES_HOST", ""),
+			Port:           getEnv("POSTGRES_PORT", ""),
+			Name:           getEnv("POSTGRES_DB", ""),
+			User:           getEnv("POSTGRES_USER", ""),
+			Password:       getEnv("POSTGRES_PASSWORD", ""),
+			MaxConnections: getEnv("MAX_POSTGRES_CONNECTIONS", ""),
+			SslMode:        getEnv("POSTGRES_SSL_MODE", ""),
+			CtxLifeTime:    getEnvTimeDuration("POSTGRES_CTX_LIFETIME", 5*time.Second),
 		},
 		&ServerConfig{
-			Network: getEnv("SERVER_NETWORK", ""),
-			Host:    getEnv("SERVER_HOST", ""),
-			Port:    getEnv("SERVER_PORT", ""),
+			Network: getEnv("API_NETWORK", ""),
+			Host:    getEnv("API_HOST", ""),
+			Port:    getEnv("API_PORT", ""),
 		},
 	}, nil
 }

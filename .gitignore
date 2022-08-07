@@ -22,7 +22,7 @@ go.work
 
 .idea/
 
-/database/data/
+/db/data/
 /bin
 .env
 
