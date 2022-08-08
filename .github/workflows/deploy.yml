@@ -16,8 +16,6 @@ jobs:
             cd app/api
             git pull
             git submodule update --init --recursive
-            pwd
             cd ..
-            pwd
-            deploy.sh
+            ./deploy.sh
 
