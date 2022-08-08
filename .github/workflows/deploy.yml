@@ -13,7 +13,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
 
           script: |
-            git clone git@github.com:kulishA/shelters-map.git app
+            cd app/api
+            git pull
             git submodule update --init --recursive
-            ../deploy.sh
+            cd ..
+            deploy.sh
 
