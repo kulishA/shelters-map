@@ -1,18 +1,26 @@
 package repository
 
 import (
+	"github.com/jmoiron/sqlx"
 	"sheltes-map/internal/core"
-	"sheltes-map/pkg/database"
 )
 
 type IShelterRepository interface {
 	GetNearestShelter(latitude, longitude float32) (*core.Shelter, error)
 }
 
-type Repository struct {
-	Shelter IShelterRepository
+type IHeatingPointRepository interface {
+	GetNearestHeatingPoint(latitude, longitude float32) (*core.HeatingPoint, error)
 }
 
-func NewRepository(db *database.Database) *Repository {
-	return &Repository{Shelter: NewShelterRepository(db)}
+type Repository struct {
+	Shelter      IShelterRepository
+	HeatingPoint IHeatingPointRepository
+}
+
+func NewRepository(db *sqlx.DB) *Repository {
+	return &Repository{
+		Shelter:      NewShelterRepository(db),
+		HeatingPoint: NewHeatingPointRepository(db),
+	}
 }

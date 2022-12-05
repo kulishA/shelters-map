@@ -28,6 +28,7 @@ func main() {
 	serv := grpc.NewGrpcServer(services)
 
 	if err := serv.ListenAndServe(conf.Server); err != nil {
+		db.Close()
 		log.Fatalf("error while run server: %s", err.Error())
 	}
 }

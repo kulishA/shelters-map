@@ -11,14 +11,14 @@ import (
 
 type ShelterHandler struct {
 	services *service.Service
-	proto.ShelterApiServer
+	proto.LocationApiServer
 }
 
 func NewShelterHandler(services *service.Service) *ShelterHandler {
 	return &ShelterHandler{services: services}
 }
 
-func (h *ShelterHandler) GetFirstNearbyShelter(ctx context.Context, in *proto.ShelterRequest) (*proto.ShelterResponse, error) {
+func (h *ShelterHandler) GetFirstNearbyShelter(ctx context.Context, in *proto.LocationRequest) (*proto.ShelterResponse, error) {
 	shelter, err := h.services.Shelter.GetNearestShelter(in.GetLatitude(), in.GetLongitude())
 	if err != nil {
 		return nil, status.Error(codes.Internal, fmt.Sprintf("error: %s", err.Error()))

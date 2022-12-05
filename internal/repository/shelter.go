@@ -2,16 +2,16 @@ package repository
 
 import (
 	"fmt"
+	"github.com/jmoiron/sqlx"
 	"sheltes-map/internal/core"
-	"sheltes-map/pkg/database"
 )
 
 type ShelterRepository struct {
-	db *database.Database
+	*sqlx.DB
 }
 
-func NewShelterRepository(db *database.Database) *ShelterRepository {
-	return &ShelterRepository{db: db}
+func NewShelterRepository(DB *sqlx.DB) *ShelterRepository {
+	return &ShelterRepository{DB: DB}
 }
 
 func (r *ShelterRepository) GetNearestShelter(latitude, longitude float32) (*core.Shelter, error) {
@@ -19,7 +19,7 @@ func (r *ShelterRepository) GetNearestShelter(latitude, longitude float32) (*cor
 	query := fmt.Sprintf("SELECT city, address, address_number, latitude, longitude, closer_type, shelter_type, building_type, owner, phone, ramp "+
 		"FROM %s ORDER BY location <-> point '(%f, %f)' LIMIT 1", shelterTable, latitude, longitude)
 
-	row := r.db.DB.QueryRow(query)
+	row := r.QueryRow(query)
 
 	if err := row.Scan(&shelter.City, &shelter.Address, &shelter.AddressNumber, &shelter.Latitude, &shelter.Longitude,
 		&shelter.CloserType, &shelter.ShelterType, &shelter.BuildingType, &shelter.Owner, &shelter.Phone, &shelter.Ramp); err != nil {
