@@ -6,9 +6,9 @@ import (
 )
 
 type Handler struct {
-	ShelterHandler proto.LocationApiServer
+	LocationHandler proto.LocationApiServer
 }
 
 func NewHandler(service *service.Service) *Handler {
-	return &Handler{ShelterHandler: NewShelterHandler(service)}
+	return &Handler{LocationHandler: NewLocationHandler(service)}
 }

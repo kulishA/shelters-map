@@ -19,13 +19,13 @@ func (r *HeatingPointRepository) GetNearestHeatingPoint(latitude, longitude floa
 
 	query := fmt.Sprintf("SELECT city, address, district, latitude, longitude, closer_type, "+
 		"start_date, capacity, mobile_phone, phone, responsible_person, kitchen_room, mother_room, disabilities_room "+
-		"FROM %s ORDER BY location <-> point '(%f, %f)' LIMIT 1", shelterTable, latitude, longitude)
+		"FROM %s ORDER BY location <-> point '(%f, %f)' LIMIT 1", heatingPointTable, latitude, longitude)
 
 	row := r.QueryRow(query)
 
 	if err := row.Scan(&heatingPoint.City, &heatingPoint.Address, &heatingPoint.District, &heatingPoint.Latitude, &heatingPoint.Longitude,
 		&heatingPoint.CloserType, &heatingPoint.StartDate, &heatingPoint.Capacity, &heatingPoint.MobilePhone, &heatingPoint.Phone,
-		&heatingPoint.ResponsiblePerson, heatingPoint.KitchenRoom, heatingPoint.MotherRoom, heatingPoint.DisabilitiesRoom); err != nil {
+		&heatingPoint.ResponsiblePerson, &heatingPoint.KitchenRoom, &heatingPoint.MotherRoom, &heatingPoint.DisabilitiesRoom); err != nil {
 		return nil, err
 	}
 

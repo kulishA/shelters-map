@@ -55,7 +55,7 @@ func (s *Server) ListenAndServe(conf *config.ServerConfig) error {
 		return err
 	}
 
-	proto.RegisterLocationApiServer(s.grpc, s.Handler.ShelterHandler)
+	proto.RegisterLocationApiServer(s.grpc, s.Handler.LocationHandler)
 
 	s.Deps.Logger.Infof("Server listening on: %s", addr)
 

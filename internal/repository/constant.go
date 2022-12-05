@@ -1,3 +1,6 @@
 package repository
 
-const shelterTable = "shelters"
+const (
+	shelterTable      = "shelters"
+	heatingPointTable = "heating_points"
+)
